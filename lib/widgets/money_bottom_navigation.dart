@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 
 import '../main.dart';
@@ -9,7 +10,7 @@ class MoneyBottomNavigation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
      return ValueListenableBuilder(
-        valueListenable: MyApp.selectedPosition,
+        valueListenable: Home.selectedBottomNavPosition,
        builder: (context, position, widget){
           return BottomNavigationBar(
             items: const [
@@ -19,7 +20,7 @@ class MoneyBottomNavigation extends StatelessWidget {
             ],
             currentIndex: position,
             onTap: (pos) {
-              MyApp.selectedPosition.value = pos;
+              Home.selectedBottomNavPosition.value = pos;
             },
           );
        },

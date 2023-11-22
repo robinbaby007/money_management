@@ -1,10 +1,9 @@
-enum CategoryType { income, expense }
 
 class CategoryModel {
+  final int id;
   final String name;
-  final bool isDeleted;
-  final CategoryType type;
+  final int isAvailable; //1 available 0 deleted
+  final int type; // 1 income 0 expense
 
-  CategoryModel(
-      {required this.name, required this.type, this.isDeleted = false});
+  CategoryModel({this.id = -1, required this.name, required this.type, this.isAvailable = 1});
 }
