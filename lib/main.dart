@@ -16,6 +16,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     CategoryDb().initCategoryDb();
+
     return const MaterialApp(
       home: Home(),
     );

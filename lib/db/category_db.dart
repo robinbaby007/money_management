@@ -1,9 +1,9 @@
 import 'package:sqflite/sqflite.dart';
 
 import '../utils/const.dart';
+import '../utils/global_variables.dart';
 import 'category_db_functions.dart';
 
-late Database categoryDb;
 
 class CategoryDb extends CategoryDbFunctionsImpl{
 
@@ -14,6 +14,9 @@ class CategoryDb extends CategoryDbFunctionsImpl{
           'CREATE TABLE $categoryTable (id INTEGER PRIMARY KEY, name TEXT, isAvailable INTEGER, type INTEGER)');
 
     });
-    getCategoryList();
+
+    categoryDbFunctionsImpl = CategoryDbFunctionsImpl();
+    categoryDbFunctionsImpl.getCategoryList(); // first time load list
+
   }
 }

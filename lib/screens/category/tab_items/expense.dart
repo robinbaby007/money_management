@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:money_management/db/category_db_functions.dart';
 
+import '../../../utils/global_variables.dart';
+
 class Expense extends StatelessWidget {
   const Expense({super.key});
 
@@ -18,7 +20,7 @@ class Expense extends StatelessWidget {
                   title: Text(expenseList[index].name),
                   trailing: GestureDetector(
                     onTap: () {
-                      deleteCategory(expenseList[index].id);
+                      categoryDbFunctionsImpl.deleteCategory(expenseList[index].id);
                     },
                     child: const Icon(Icons.delete),
                   ),

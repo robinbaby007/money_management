@@ -3,6 +3,7 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 
 import '../../../db/category_db_functions.dart';
+import '../../../utils/global_variables.dart';
 
 class Income extends StatelessWidget {
   const Income({super.key});
@@ -21,7 +22,7 @@ class Income extends StatelessWidget {
                   title: Text(incomeList[index].name),
                   trailing: GestureDetector(
                     onTap: () {
-                      deleteCategory(incomeList[index].id);
+                      categoryDbFunctionsImpl.deleteCategory(incomeList[index].id);
                     },
                     child: const Icon(Icons.delete),
                   ),
