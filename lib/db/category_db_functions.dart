@@ -15,10 +15,34 @@ class CategoryDbFunctionsImpl extends CategoryDbFunctions {
   Future<void> getCategoryList() async {
     categoryIncomeList.value.clear();
     categoryExpenseList.value.clear();
-
+    categoryList.value.clear();
     List<Map> list = await categoryDb.rawQuery('SELECT * FROM $categoryTable');
 
-    for (var item in list) {
+    await Future.forEach(list, (item){
+      CategoryModel categoryModel = CategoryModel(
+        id: item['id'],
+        name: item['name'],
+        type: item['type'],
+        isAvailable: item['isAvailable'],
+      );
+
+      if (item['isAvailable'] == 1) {
+
+        categoryList.value.add(categoryModel);
+
+
+        if (item['type'] == 1) {
+          categoryIncomeList.value.add(categoryModel);
+        } else {
+          categoryExpenseList.value.add(categoryModel);
+        }
+      }
+      categoryIncomeList.notifyListeners();
+      categoryExpenseList.notifyListeners();
+      categoryList.notifyListeners();
+    });
+
+    /*for (var item in list) {
       CategoryModel categoryModel = CategoryModel(
         id: item['id'],
         name: item['name'],
@@ -35,7 +59,7 @@ class CategoryDbFunctionsImpl extends CategoryDbFunctions {
       }
     }
     categoryIncomeList.notifyListeners();
-    categoryExpenseList.notifyListeners();
+    categoryExpenseList.notifyListeners();*/
   }
 
   @override

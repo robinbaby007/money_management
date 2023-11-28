@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 const String categoryTable = "Category";
+const String transactionTable = "TransactionTable";
+
 
 const List<DropdownMenuEntry> categoryDropList = [
   DropdownMenuEntry(value: 0, label: 'Expense'),
@@ -10,3 +12,6 @@ const List<DropdownMenuEntry> categoryDropList = [
 const OutlineInputBorder boarderProperty = OutlineInputBorder(
   borderSide: BorderSide(color: Colors.blue),
 );
+
+
+

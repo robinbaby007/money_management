@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:money_management/db/transaction_db.dart';
 import 'package:money_management/screens/category/Category.dart';
 import 'package:money_management/screens/diaglog/add_category_dialog.dart';
+import 'package:money_management/screens/transaction/add_transaction.dart';
 import 'package:money_management/screens/transaction/transaction.dart';
+import 'package:money_management/utils/global_variables.dart';
 import 'package:money_management/widgets/money_bottom_navigation.dart';
 
 import 'db/category_db.dart';
@@ -15,10 +18,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TransactionDb().initTransactionDb();
     CategoryDb().initCategoryDb();
 
-    return const MaterialApp(
-      home: Home(),
+
+    return   MaterialApp(
+      home:const Home(),
+      initialRoute: 'home',
+      routes: {
+        'home': (context) => const Home(),
+         '/AddTransaction': (context) =>   AddTransaction(),
+      },
     );
   }
 }
@@ -46,7 +56,7 @@ class Home extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           if (selectedBottomNavPosition.value == 0) {
-            print("Transaction");
+            Navigator.pushNamed(context, '/AddTransaction');
           } else {
             Dialogs().addCategoryDialog(context);
           }

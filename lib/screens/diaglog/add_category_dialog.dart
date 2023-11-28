@@ -12,7 +12,7 @@ class Dialogs extends CategoryDbFunctionsImpl {
 
     return showDialog(
       context: context,
-      builder: (context) {
+      builder: (ctx) {
         return AlertDialog(
           title: const Text(
             "Add Category",
@@ -45,6 +45,12 @@ class Dialogs extends CategoryDbFunctionsImpl {
                     categoryType = type;
                   },
                 ),
+                /*const Row(
+                  children: [
+                    CustomRadio(title: "Income", type: "Income"),
+                    CustomRadio(title: "Expense", type: "Expense"),
+                  ],
+                )*/
               ],
             ),
           ),
@@ -61,7 +67,7 @@ class Dialogs extends CategoryDbFunctionsImpl {
                 CategoryModel newCategory = CategoryModel(
                     name: controller.text, type: categoryType, isAvailable: 1);
                 addToCategory(newCategory);
-                Navigator.of(context).pop();
+                Navigator.of(ctx).pop();
               },
             ),
           ],
@@ -70,3 +76,31 @@ class Dialogs extends CategoryDbFunctionsImpl {
     );
   }
 }
+
+/*class CustomRadio extends StatelessWidget {
+  final String type;
+  final String title;
+
+  const CustomRadio({required this.type, required this.title, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        ValueListenableBuilder(
+            valueListenable: radioCurrentValue,
+            builder: (context, value, widget) {
+              return Radio(
+                value: type,
+                groupValue: radioCurrentValue.value,
+                onChanged: (newValue) {
+                  radioCurrentValue.value = newValue;
+                  radioCurrentValue.notifyListeners();
+                },
+              );
+            }),
+        Text(title)
+      ],
+    );
+  }
+}*/
