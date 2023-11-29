@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../db/transaction_db_functions.dart';
 import '../../utils/global_variables.dart';
 
 class Transaction extends StatelessWidget {
@@ -13,32 +14,61 @@ class Transaction extends StatelessWidget {
         return ListView.separated(
             padding: const EdgeInsets.all(4),
             itemBuilder: (context, position) {
-              return Card(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10)),
-                elevation: 4,
-                child: ListTile(
-                  leading: CircleAvatar(
-                    radius: 30,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          getMothFromDateString(transactionList[position].date),
-                          style: const TextStyle(fontWeight: FontWeight.bold),
-                        ),
-
-                        Text(
-                          getDayFromDateString(transactionList[position].date),
-                          style: const TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    )
+              return Dismissible(
+                key: Key(
+                  transactionList[position].id.toString(),
+                ),
+                confirmDismiss: (val) async {
+                  return true;
+                },
+                onDismissed: (direction) {
+                  TransactionDbFunctionsImpl().deleteTransaction(transactionList[position].id);
+                  TransactionDbFunctionsImpl().getTransactionList();
+                },
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                  elevation: 4,
+                  child: ListTile(
+                    leading: CircleAvatar(
+                        backgroundColor:
+                            transactionList[position].expenseType == 0
+                                ? Colors.redAccent
+                                : Colors.green,
+                        radius: 40,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              getMothFromDateString(
+                                  transactionList[position].date),
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
+                            ),
+                            Text(
+                              getDayFromDateString(
+                                  transactionList[position].date),
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
+                            ),
+                            Text(
+                              getYearFromDateString(
+                                  transactionList[position].date),
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.normal,
+                                  color: Colors.white,
+                                  fontSize: 10),
+                            ),
+                          ],
+                        )),
+                    title: Text("Rs. ${transactionList[position].amount}/-"),
+                    subtitle: Text(transactionList[position].purpose),
+                    trailing: Text(transactionList[position].expenseType == 0
+                        ? "Expense"
+                        : "Income"),
                   ),
-                  title: Text("Rs. ${transactionList[position].amount}/-"),
-                  subtitle: Text(transactionList[position].expenseType == 0
-                      ? "Expense"
-                      : "Income"),
                 ),
               );
             },

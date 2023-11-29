@@ -26,28 +26,37 @@ class TransactionDbFunctionsImpl extends TransactionDbFunctions {
     getTransactionList();
   }
 
-  @override
-  Future<void> deleteTransaction(int id) async {
-   }
 
-  @override
-  Future<void> getTransactionList() async {
-    transactionList.value.clear();
-      List<Map> list =
-        await transactionDb.rawQuery('SELECT * FROM $transactionTable');
-    await Future.forEach(
-      list,
-      (item) {
-        TransactionModel transactionModel = TransactionModel(
-          id: item['id'],
-          purpose: item['purpose'],
-          amount: item['amount'],
-          date: item['date'],
-          expenseType: int.parse(item['expenseType']),
-        );
-        transactionList.value.add(transactionModel);
-        transactionList.notifyListeners();
-      },
-    );
-  }
+
+@override
+Future<void> deleteTransaction(int id) async {
+  await transactionDb.rawUpdate(
+      'DELETE FROM $transactionTable WHERE id = ?', [id]);
 }
+
+@override
+Future<void> getTransactionList() async {
+  transactionList.value.clear();
+  List<Map> list =
+  await transactionDb.rawQuery('SELECT * FROM $transactionTable');
+  await Future.forEach(
+    list,
+        (item) {
+      TransactionModel transactionModel = TransactionModel(
+        id: item['id'],
+        purpose: item['purpose'],
+        amount: item['amount'],
+        date: item['date'],
+        expenseType: int.parse(item['expenseType']),
+      );
+      transactionList.value.add(transactionModel);
+      transactionList.value.sort(
+            (pre, latest) =>
+            dateFormatToYyyyMmDd(pre.date).compareTo(
+              dateFormatToYyyyMmDd(latest.date),
+            ),
+      );
+      transactionList.notifyListeners();
+    },
+  );
+}}

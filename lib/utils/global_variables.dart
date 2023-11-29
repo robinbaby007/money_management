@@ -15,6 +15,9 @@ ValueNotifier<List<CategoryModel>> categoryIncomeList = ValueNotifier([]);
 
 ValueNotifier<List<CategoryModel>> categoryExpenseList = ValueNotifier([]);
 
+ValueNotifier<List<CategoryModel>> categoryTempListForTransaction =
+    ValueNotifier(categoryExpenseList.value);
+
 late Database categoryDb;
 late Database transactionDb;
 
@@ -49,7 +52,25 @@ String getDayFromDateString(String dateSting) {
   DateTime afterParse = DateFormat('dd-MM-yyyy').parse(dateSting);
   /*String afterFormat = DateFormat('yyyy-MM-dd').format(afterParse);*/
 
-   int day = afterParse.day;
+  int day = afterParse.day;
 
   return day.toString();
 }
+
+String getYearFromDateString(String dateSting) {
+  DateTime afterParse = DateFormat('dd-MM-yyyy').parse(dateSting);
+  /*String afterFormat = DateFormat('yyyy-MM-dd').format(afterParse);*/
+
+  int year = afterParse.year;
+
+  return year.toString();
+}
+
+String dateFormatToYyyyMmDd(String dateSting) {
+  DateTime afterParse = DateFormat('dd-MM-yyyy').parse(dateSting);
+  String afterFormat = DateFormat('yyyy-MM-dd').format(afterParse);
+  return afterFormat.toString();
+}
+
+
+

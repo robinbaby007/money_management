@@ -1,8 +1,11 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:money_management/db/transaction_db_functions.dart';
 import 'package:money_management/models/transaction_model.dart';
 
- import '../../utils/global_variables.dart';
+import '../../utils/const.dart';
+import '../../utils/global_variables.dart';
 import 'package:intl/intl.dart';
 
 class AddTransaction extends StatelessWidget {
@@ -14,6 +17,10 @@ class AddTransaction extends StatelessWidget {
   TextEditingController purposeTextEditingController = TextEditingController();
   TextEditingController amountTextEditingController = TextEditingController();
   int transactionCategory = -1;
+
+  ValueNotifier selectedRadio = ValueNotifier(0);
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -71,6 +78,42 @@ class AddTransaction extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 8),
+                  ValueListenableBuilder(
+                    builder: (context,value,widget){
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Row(
+                            children: [
+                              Radio<int>(
+                                value: categoryDropList[0].value,
+                                groupValue:selectedRadio.value ,
+                                onChanged: (value) {
+                                  selectedRadio.value = value;
+                                  categoryTempListForTransaction.value=categoryExpenseList.value;
+                                },
+                              ),
+                              const Text("Expense")
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Radio<int>(
+                                value: categoryDropList[1].value,
+                                groupValue: selectedRadio.value,
+                                onChanged: (value) {
+                                  selectedRadio.value = value;
+                                  categoryTempListForTransaction.value=categoryIncomeList.value;
+                                },
+                              ),
+                              const Text("Income")
+                            ],
+                          ),
+                        ],
+                      );
+                    },
+                    valueListenable: selectedRadio,
+                   ),
                   Container(
                     width: double.infinity,
                     height: 1,
@@ -82,7 +125,7 @@ class AddTransaction extends StatelessWidget {
                 height: 20,
               ),
               ValueListenableBuilder(
-                valueListenable: categoryList,
+                valueListenable: categoryTempListForTransaction,
                 builder: (context, list, widget) {
                   return DropdownMenu(
                     hintText: "Choose Transaction Category",
@@ -105,7 +148,7 @@ class AddTransaction extends StatelessWidget {
               SizedBox(
                 width: MediaQuery.of(context).size.width * .40,
                 child: ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     if (purposeTextEditingController.text.isEmpty) {
                       showSnack(context, "Enter Purpose");
                     } else if (amountTextEditingController.text.isEmpty) {
@@ -124,10 +167,9 @@ class AddTransaction extends StatelessWidget {
                         expenseType: transactionCategory,
                         purpose: purposeTextEditingController.text,
                       );
-                       TransactionDbFunctionsImpl().addToTransaction(model);
+                      await TransactionDbFunctionsImpl().addToTransaction(model);
                       Navigator.of(context).pop();
                       showSnack(context, "Transaction Added Successfully");
-
                     }
                   },
                   child: const Text("Submit"),
