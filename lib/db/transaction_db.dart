@@ -4,7 +4,7 @@ import 'package:sqflite/sqflite.dart';
 import '../utils/const.dart';
 import '../utils/global_variables.dart';
 
-class TransactionDb extends TransactionDbFunctionsImpl {
+class TransactionDb  {
 
   Future<void> initTransactionDb() async {
     transactionDb = await openDatabase("transactionDb.db", version: 1,
@@ -12,10 +12,6 @@ class TransactionDb extends TransactionDbFunctionsImpl {
       await db.execute(
           'CREATE TABLE $transactionTable (id INTEGER PRIMARY KEY, purpose TEXT, amount INTEGER, date TEXT , expenseType INTEGER)');
     });
-
-    transactionDbFunctionsImpl = TransactionDbFunctionsImpl();
-    transactionDbFunctionsImpl.getTransactionList();
-
   }
 
 

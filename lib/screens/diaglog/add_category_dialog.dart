@@ -4,7 +4,7 @@ import '../../db/category_db_functions.dart';
 import '../../models/category_model.dart';
 import '../../utils/const.dart';
 
-class Dialogs extends CategoryDbFunctionsImpl {
+class Dialogs {
   Future<void> addCategoryDialog(BuildContext context) {
     int categoryType = 0;
 
@@ -66,7 +66,8 @@ class Dialogs extends CategoryDbFunctionsImpl {
               onPressed: () {
                 CategoryModel newCategory = CategoryModel(
                     name: controller.text, type: categoryType, isAvailable: 1);
-                addToCategory(newCategory);
+
+                CategoryDbFunctionsImpl.instance.addToCategory(newCategory);
                 Navigator.of(ctx).pop();
               },
             ),

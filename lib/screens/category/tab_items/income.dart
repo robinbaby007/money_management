@@ -22,7 +22,7 @@ class Income extends StatelessWidget {
                   title: Text(incomeList[index].name),
                   trailing: GestureDetector(
                     onTap: () {
-                      categoryDbFunctionsImpl.deleteCategory(incomeList[index].id);
+                      CategoryDbFunctionsImpl.instance.deleteCategory(incomeList[index].id);
                     },
                     child: const Icon(Icons.delete),
                   ),

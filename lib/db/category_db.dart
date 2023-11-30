@@ -5,7 +5,7 @@ import '../utils/global_variables.dart';
 import 'category_db_functions.dart';
 
 
-class CategoryDb extends CategoryDbFunctionsImpl{
+class CategoryDb{
 
     Future<void> initCategoryDb() async {
     categoryDb = await openDatabase("category.db", version: 1,
@@ -15,9 +15,6 @@ class CategoryDb extends CategoryDbFunctionsImpl{
         'CREATE TABLE dogs(id INTEGER PRIMARY KEY, name TEXT, age INTEGER)',
       );
     });
-
-    categoryDbFunctionsImpl = CategoryDbFunctionsImpl();
-    categoryDbFunctionsImpl.getCategoryList(); // first time load list
 
   }
 }

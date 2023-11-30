@@ -20,7 +20,7 @@ class Expense extends StatelessWidget {
                   title: Text(expenseList[index].name),
                   trailing: GestureDetector(
                     onTap: () {
-                      categoryDbFunctionsImpl.deleteCategory(expenseList[index].id);
+                      CategoryDbFunctionsImpl.instance.deleteCategory(expenseList[index].id);
                     },
                     child: const Icon(Icons.delete),
                   ),

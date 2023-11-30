@@ -55,9 +55,9 @@ class Transaction extends StatelessWidget {
                   return confirmed;
                 },
                 onDismissed: (direction) {
-                   TransactionDbFunctionsImpl()
+                  TransactionDbFunctionsImpl.instance
                       .deleteTransaction(transactionList[position].id);
-                  TransactionDbFunctionsImpl().getTransactionList();
+                  TransactionDbFunctionsImpl.instance.getTransactionList();
                 },
                 child: Card(
                   shape: RoundedRectangleBorder(

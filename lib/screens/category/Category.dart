@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:money_management/db/category_db_functions.dart';
 import 'package:money_management/screens/category/tab_items/expense.dart';
 import 'package:money_management/screens/category/tab_items/income.dart';
 
@@ -10,8 +11,12 @@ class Category extends StatelessWidget {
     Tab(text: "EXPENSE"),
   ];
 
+
   @override
   Widget build(BuildContext context) {
+
+    CategoryDbFunctionsImpl.instance.getCategoryList();
+
     return DefaultTabController(
         length: tabs.length,
         child: Column(

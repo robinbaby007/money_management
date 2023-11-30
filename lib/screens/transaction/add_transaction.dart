@@ -167,7 +167,7 @@ class AddTransaction extends StatelessWidget {
                         expenseType: transactionCategory,
                         purpose: purposeTextEditingController.text,
                       );
-                      await TransactionDbFunctionsImpl().addToTransaction(model);
+                      await TransactionDbFunctionsImpl.instance.addToTransaction(model);
                       Navigator.of(context).pop();
                       showSnack(context, "Transaction Added Successfully");
                     }

@@ -18,7 +18,7 @@ class CategoryDbFunctionsImpl extends CategoryDbFunctions {
     categoryList.value.clear();
     List<Map> list = await categoryDb.rawQuery('SELECT * FROM $categoryTable');
 
-    await Future.forEach(list, (item){
+    await Future.forEach(list, (item) {
       CategoryModel categoryModel = CategoryModel(
         id: item['id'],
         name: item['name'],
@@ -27,9 +27,7 @@ class CategoryDbFunctionsImpl extends CategoryDbFunctions {
       );
 
       if (item['isAvailable'] == 1) {
-
         categoryList.value.add(categoryModel);
-
 
         if (item['type'] == 1) {
           categoryIncomeList.value.add(categoryModel);
@@ -75,5 +73,14 @@ class CategoryDbFunctionsImpl extends CategoryDbFunctions {
     await categoryDb.rawUpdate(
         'UPDATE $categoryTable SET isAvailable = ? WHERE id = ?', [0, id]);
     getCategoryList();
+  }
+
+
+  CategoryDbFunctionsImpl._catConstructor();
+  static final CategoryDbFunctionsImpl instance =
+      CategoryDbFunctionsImpl._catConstructor();
+
+  factory CategoryDbFunctionsImpl() {
+    return instance;
   }
 }

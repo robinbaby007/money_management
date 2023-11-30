@@ -8,6 +8,7 @@ import 'package:money_management/utils/global_variables.dart';
 import 'package:money_management/widgets/money_bottom_navigation.dart';
 
 import 'db/category_db.dart';
+import 'db/transaction_db_functions.dart';
 
 void main() {
   runApp(const MyApp());
@@ -20,14 +21,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     TransactionDb().initTransactionDb();
     CategoryDb().initCategoryDb();
+    TransactionDbFunctionsImpl.instance.getTransactionList();
 
-
-    return   MaterialApp(
-      home:const Home(),
+    return MaterialApp(
+      home: const Home(),
       initialRoute: 'home',
       routes: {
         'home': (context) => const Home(),
-         '/AddTransaction': (context) =>   AddTransaction(),
+        '/AddTransaction': (context) => AddTransaction(),
       },
     );
   }
