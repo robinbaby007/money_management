@@ -18,11 +18,45 @@ class Transaction extends StatelessWidget {
                 key: Key(
                   transactionList[position].id.toString(),
                 ),
-                confirmDismiss: (val) async {
-                  return true;
+                direction: DismissDirection.endToStart,
+                background: const ColoredBox(
+                    color: Colors.red,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Icon(
+                          Icons.delete,
+                          size: 40,
+                          color: Colors.white,
+                        ),
+                        SizedBox(width: 8)
+                      ],
+                    )),
+                confirmDismiss: (_) async {
+                  final confirmed = await showDialog<bool>(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: const Text('Do you want to delete?'),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.pop(context, false),
+                            child: const Text('No'),
+                          ),
+                          TextButton(
+                            onPressed: () => Navigator.pop(context, true),
+                            child: const Text('Yes'),
+                          )
+                        ],
+                      );
+                    },
+                  );
+
+                  return confirmed;
                 },
                 onDismissed: (direction) {
-                  TransactionDbFunctionsImpl().deleteTransaction(transactionList[position].id);
+                   TransactionDbFunctionsImpl()
+                      .deleteTransaction(transactionList[position].id);
                   TransactionDbFunctionsImpl().getTransactionList();
                 },
                 child: Card(
