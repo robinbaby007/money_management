@@ -18,11 +18,9 @@ ValueNotifier<List<CategoryModel>> categoryExpenseList = ValueNotifier([]);
 ValueNotifier<List<CategoryModel>> categoryTempListForTransaction =
     ValueNotifier(categoryExpenseList.value);
 
-late Database categoryDb;
-late Database transactionDb;
-
+// late Database categoryDb;
+// late Database transactionDb;
 /*late CategoryDbFunctionsImpl categoryDbFunctionsImpl;*/
-
 // late TransactionDbFunctionsImpl transactionDbFunctionsImpl;
 
 ValueNotifier<String?> radioCurrentValue = ValueNotifier("Income");

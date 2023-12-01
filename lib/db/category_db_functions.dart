@@ -1,6 +1,7 @@
 import '../models/category_model.dart';
 import '../utils/const.dart';
 import '../utils/global_variables.dart';
+import 'category_db.dart';
 
 abstract class CategoryDbFunctions {
   Future<void> getCategoryList();
@@ -16,7 +17,7 @@ class CategoryDbFunctionsImpl extends CategoryDbFunctions {
     categoryIncomeList.value.clear();
     categoryExpenseList.value.clear();
     categoryList.value.clear();
-    List<Map> list = await categoryDb.rawQuery('SELECT * FROM $categoryTable');
+    List<Map> list = await CategoryDb.instance.getCategoryDb().rawQuery('SELECT * FROM $categoryTable');
 
     await Future.forEach(list, (item) {
       CategoryModel categoryModel = CategoryModel(
@@ -62,7 +63,7 @@ class CategoryDbFunctionsImpl extends CategoryDbFunctions {
 
   @override
   Future<void> addToCategory(CategoryModel categoryModel) async {
-    await categoryDb.rawInsert(
+    await CategoryDb.instance.getCategoryDb().rawInsert(
         'INSERT INTO $categoryTable(name, isAvailable, type) VALUES(?, ?, ?)',
         [categoryModel.name, categoryModel.isAvailable, categoryModel.type]);
     getCategoryList();
@@ -70,7 +71,7 @@ class CategoryDbFunctionsImpl extends CategoryDbFunctions {
 
   @override
   Future<void> deleteCategory(int id) async {
-    await categoryDb.rawUpdate(
+    await CategoryDb.instance.getCategoryDb().rawUpdate(
         'UPDATE $categoryTable SET isAvailable = ? WHERE id = ?', [0, id]);
     getCategoryList();
   }

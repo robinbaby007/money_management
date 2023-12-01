@@ -1,3 +1,4 @@
+import 'package:money_management/db/transaction_db.dart';
 import 'package:money_management/utils/const.dart';
 
 import '../models/transaction_model.dart';
@@ -14,7 +15,7 @@ abstract class TransactionDbFunctions {
 class TransactionDbFunctionsImpl extends TransactionDbFunctions {
   @override
   Future<void> addToTransaction(TransactionModel transactionModel) async {
-    await transactionDb.rawInsert(
+    await TransactionDb.instance.getTransactionDb().rawInsert(
       'INSERT INTO $transactionTable(purpose, amount, date, expenseType) VALUES(?, ?, ?, ? )',
       [
         transactionModel.purpose,
@@ -28,7 +29,7 @@ class TransactionDbFunctionsImpl extends TransactionDbFunctions {
 
   @override
   Future<void> deleteTransaction(int id) async {
-    await transactionDb
+    await TransactionDb.instance.getTransactionDb()
         .rawUpdate('DELETE FROM $transactionTable WHERE id = ?', [id]);
   }
 
@@ -36,7 +37,7 @@ class TransactionDbFunctionsImpl extends TransactionDbFunctions {
   Future<void> getTransactionList() async {
     transactionList.value.clear();
     List<Map> list =
-        await transactionDb.rawQuery('SELECT * FROM $transactionTable');
+        await TransactionDb.instance.getTransactionDb().rawQuery('SELECT * FROM $transactionTable');
     await Future.forEach(
       list,
       (item) {
@@ -45,7 +46,7 @@ class TransactionDbFunctionsImpl extends TransactionDbFunctions {
           purpose: item['purpose'],
           amount: item['amount'],
           date: item['date'],
-          expenseType: int.parse(item['expenseType']),
+          expenseType: item['expenseType'],
         );
         transactionList.value.add(transactionModel);
         transactionList.value.sort(

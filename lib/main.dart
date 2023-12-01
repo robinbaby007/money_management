@@ -19,9 +19,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TransactionDb().initTransactionDb();
-    CategoryDb().initCategoryDb();
-    TransactionDbFunctionsImpl.instance.getTransactionList();
+
+    TransactionDb.instance.initTransactionDb();
+    CategoryDb.instance.initCategoryDb();
 
     return MaterialApp(
       home: const Home(),
