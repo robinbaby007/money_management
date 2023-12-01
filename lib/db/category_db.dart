@@ -1,3 +1,4 @@
+import 'package:money_management/db/category_db_functions.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../utils/const.dart';
@@ -24,5 +25,8 @@ class CategoryDb {
       await db.execute(
           'CREATE TABLE $categoryTable (id INTEGER PRIMARY KEY, name TEXT, isAvailable INTEGER, type INTEGER)');
     });
+
+    CategoryDbFunctionsImpl.instance.getCategoryList();
+
   }
 }

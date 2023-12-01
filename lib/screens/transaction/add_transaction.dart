@@ -27,7 +27,7 @@ class AddTransaction extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("ADD TRANSACTION"),
+          title: const Text("Add Transaction"),
         ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -72,7 +72,7 @@ class AddTransaction extends StatelessWidget {
                       ValueListenableBuilder(
                         valueListenable: finalDate,
                         builder: (context, newDate, widget) {
-                          return Text(finalDate.value);
+                          return Text(finalDate.value,style: const TextStyle(fontWeight: FontWeight.w500),);
                         },
                       )
                     ],

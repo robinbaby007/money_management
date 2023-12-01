@@ -27,6 +27,12 @@ ValueNotifier<String?> radioCurrentValue = ValueNotifier("Income");
 
 ValueNotifier<List<TransactionModel>> transactionList = ValueNotifier([]);
 
+ValueNotifier<int> totalIncome = ValueNotifier(0);
+ValueNotifier<int> totalExpense = ValueNotifier(0);
+
+ValueNotifier<int> balance = ValueNotifier(0);
+
+
 void showSnack(context, message) {
   SnackBar snackBar = SnackBar(
     content: Text(message),

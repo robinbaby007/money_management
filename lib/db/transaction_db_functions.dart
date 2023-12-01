@@ -29,15 +29,21 @@ class TransactionDbFunctionsImpl extends TransactionDbFunctions {
 
   @override
   Future<void> deleteTransaction(int id) async {
-    await TransactionDb.instance.getTransactionDb()
+    await TransactionDb.instance
+        .getTransactionDb()
         .rawUpdate('DELETE FROM $transactionTable WHERE id = ?', [id]);
   }
 
   @override
   Future<void> getTransactionList() async {
     transactionList.value.clear();
-    List<Map> list =
-        await TransactionDb.instance.getTransactionDb().rawQuery('SELECT * FROM $transactionTable');
+
+    totalIncome.value = 0;
+    totalExpense.value =0;
+
+    List<Map> list = await TransactionDb.instance
+        .getTransactionDb()
+        .rawQuery('SELECT * FROM $transactionTable');
     await Future.forEach(
       list,
       (item) {
@@ -54,9 +60,23 @@ class TransactionDbFunctionsImpl extends TransactionDbFunctions {
             dateFormatToYyyyMmDd(latest.date),
           ),
         );
-        transactionList.notifyListeners();
+
+        if (item['expenseType'] == 0) {
+          var expense= item['amount'] as int;
+          totalExpense.value = totalExpense.value + expense;
+        } else {
+          var income= item['amount'] as int;
+          totalIncome.value = totalIncome.value + income;
+        }
+
       },
     );
+    balance.value= totalIncome.value-totalExpense.value;
+    transactionList.notifyListeners();
+    totalIncome.notifyListeners();
+    totalExpense.notifyListeners();
+    balance.notifyListeners();
+
   }
 
   TransactionDbFunctionsImpl._transConstructor();

@@ -27,7 +27,6 @@ class TransactionDb  {
           'CREATE TABLE $transactionTable (id INTEGER PRIMARY KEY, purpose TEXT, amount INTEGER, date TEXT , expenseType INTEGER)');
     });
 
-
     TransactionDbFunctionsImpl.instance.getTransactionList();
 
   }

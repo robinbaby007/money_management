@@ -25,6 +25,7 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       home: const Home(),
+      debugShowCheckedModeBanner: false,
       initialRoute: 'home',
       routes: {
         'home': (context) => const Home(),
@@ -45,7 +46,7 @@ class Home extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
-        title: const Text("MONEY MANAGER"),
+        title: const Text("Money Manager"),
         centerTitle: true,
       ),
       body: ValueListenableBuilder(

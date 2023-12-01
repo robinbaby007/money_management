@@ -36,10 +36,12 @@ class CategoryDbFunctionsImpl extends CategoryDbFunctions {
           categoryExpenseList.value.add(categoryModel);
         }
       }
-      categoryIncomeList.notifyListeners();
-      categoryExpenseList.notifyListeners();
-      categoryList.notifyListeners();
+
     });
+
+    categoryIncomeList.notifyListeners();
+    categoryExpenseList.notifyListeners();
+    categoryList.notifyListeners();
 
     /*for (var item in list) {
       CategoryModel categoryModel = CategoryModel(
