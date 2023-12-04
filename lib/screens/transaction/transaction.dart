@@ -1,29 +1,93 @@
 import 'package:flutter/material.dart';
- import 'package:money_management/utils/ValueListenableBuilder2.dart';
+import 'package:money_management/utils/ValueListenableBuilder2.dart';
 
 import '../../db/transaction_db_functions.dart';
- import '../../utils/global_variables.dart';
+import '../../utils/global_variables.dart';
 
 class Transaction extends StatelessWidget {
   const Transaction({super.key});
 
   @override
   Widget build(BuildContext context) {
+    TextStyle textStyleDefault = const TextStyle(
+        fontWeight: FontWeight.normal, color: Colors.white, fontSize: 10);
+    TextStyle textStyleBold = const TextStyle(
+        fontWeight: FontWeight.bold, color: Colors.white, fontSize: 15);
     return Column(
       children: [
         ValueListenableBuilder3(
           totalIncome,
           totalExpense,
           balance,
-          builder: (context, totalIncome, totalExpense,balance, widget) {
-            return Card(
-              child: Row(
-                children: [Text("Income : $totalIncome  "), Text("Expense : $totalExpense  "), Text("Balance : $balance  ")],
+          builder: (context, totalIncome, totalExpense, balance, widget) {
+            return Padding(
+              padding: const EdgeInsets.only(left: 16, right: 16),
+              child: Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      CircleAvatar(
+                        backgroundColor: Colors.green,
+                        radius: 30,
+                        child: Column(
+                           mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Total",
+                              style: textStyleDefault,
+                            ),
+                            Text(
+                              "Income",
+                              style: textStyleDefault,
+                            ),
+                            Text("$totalIncome", style: textStyleBold)
+                          ],
+                        ),
+                      ),
+                      CircleAvatar(
+                        backgroundColor: Colors.red,
+                        radius: 30,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Total",
+                              style: textStyleDefault,
+                            ),
+                            Text(
+                              "Expense",
+                              style: textStyleDefault,
+                            ),
+                            Text("$totalExpense", style: textStyleBold)
+                          ],
+                        ),
+                      ),
+                      CircleAvatar(
+                        backgroundColor: Colors.yellow,
+                        radius: 30,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Balance",
+                              style: textStyleDefault,
+                            ),
+                            Text("$balance", style: textStyleBold)
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
               ),
             );
           },
           child: const Text(""),
-
         ),
         ValueListenableBuilder(
           valueListenable: transactionList,
